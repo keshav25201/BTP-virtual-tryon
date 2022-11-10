@@ -1,6 +1,7 @@
 * {
   margin: 0;
   font-family: 'Urbanist', sans-serif;
+  letter-spacing: 0.2rem;
 }
 
 input:focus{outline : none;}

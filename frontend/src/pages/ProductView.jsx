@@ -1,9 +1,10 @@
 import React,{useEffect,useState} from 'react';
+import Carousel from 'react-bootstrap/Carousel';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import store from '../state/store';
 const Wrapper = styled.div` 
-    padding : 30px;
+    padding : 30px; 
     display: flex;
     width: 1000px;
 `
@@ -18,10 +19,13 @@ const DetailsWrapper = styled.div`
     padding-left: 5rem;
 `
 const Button = styled.button` 
-    width : 40%;
+    width : 100%;
+    background: #1c1b1b;
+    color: white;
     align-self: center;
     padding : 5px;
     margin-top : 10px;
+    border: none;
 `
 const ProductView = () => {
     const params = useParams();
@@ -42,16 +46,25 @@ const ProductView = () => {
     )
   return (
     <Wrapper>
-        <ImageWrapper><img style={{height:"100%"}} src={product.image} alt="" /></ImageWrapper>
+        <div style={{"width":"600px"}}>
+         <Carousel variant="dark" interval={null}>
+                    <Carousel.Item style={{"alignItems":"center","textAlign":"center"}}>
+                        <img style={{"width":"400px","textAlign":"center"}}  src={product.image} alt="" />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img style={{"width":"400px"}}   src={product.image} alt="" />
+                    </Carousel.Item>
+            </Carousel>
+        </div>
+          
+            {/* <ImageWrapper><img style={{height:"100%"}} src={product.image} alt="" /></ImageWrapper>
+            <ImageWrapper><img style={{height:"100%"}} src={product.image} alt="" /></ImageWrapper> */}
+
         <DetailsWrapper>
-            <p style={{fontSize:"40px",fontWeight:"500",paddingBottom:"15px"}}>{product.title}</p>
-            <p style={{paddingBottom:"15px"}}>{product.description}</p>
-            <p style={{fontSize:"40px",paddingBottom:"15px"}}>₹ {product.price}</p>
-            <div style={{display:"flex",justifyContent:"space-between"}}> 
-                <p><span>Color </span><span>{product.color}</span></p>
-                <p><span>Size </span><span>{product.size}</span></p>
-            </div>
-            <Button onClick={addToCart}>Add Cart</Button>
+            <p style={{fontSize:"25px",fontWeight:"500",paddingBottom:"15px"}}>{product.title}</p>
+            <p style={{fontSize:"20px",paddingBottom:"15px"}}>₹ {product.price}</p>
+            <p style={{paddingBottom:"15px",fontSize:"13px"}}>{product.description}</p>
+            <Button onClick={addToCart}>ADD TO CART</Button>
         </DetailsWrapper>
     </Wrapper>
   )

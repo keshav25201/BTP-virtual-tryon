@@ -7,19 +7,30 @@ import UserIcon from '../images/user.svg'
 import store from '../state/store';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-const Wrapper = styled.div`
+const Container = styled.div` 
+    border-bottom: 0.5px solid #BFBFBF;
+    position: fixed;
+    top:0px;
+    width: 100vw;
+    background: white;
+`
+const UpperNav = styled.div`
     display: flex;
     padding: 15px 10px;
     justify-content:space-between ;
-    border-bottom: 4px solid #cdd22c;
+    font-family: Montserrat,sans-serif;
 `
-const Option = styled.div`
-    display:flex ;
-    justify-content:space-around;
-    flex:0.3;
+const UpperNavOptionsContainer = styled.div`
+    display: flex;
+    flex : 0.2;
+    justify-content: space-evenly;
+`
+const UpperNavOptions = styled.div` 
+    width: 30px;
+    height:30px ;
 `
 const Center = styled.div`
-    flex:0.4;
+    flex:1;
     text-align:center ;
     font-size: 30px;
     font-weight: 500;
@@ -33,7 +44,34 @@ const StyledLink = styled(Link)`
 text-decoration: none;
 color: black;
 `
-const Navbar = () => {
+const LowerNav = styled.div` 
+    display: flex;
+    justify-content : space-evenly;
+    padding-top: 20px;
+    /* padding: 10px; */
+`
+const LowerNavOptions = styled.div` 
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    &:after{
+        margin-top: 5px;
+        content: "";
+        background: black;
+        height: 2px;
+        width : 0;
+        display: block;
+        transition: width 0.25s ease-out;
+    }
+    &:hover::after{
+        width: 100%;
+    }
+    /* &:hover {
+        border-bottom: 2px solid black;
+        transition: ;
+  } */
+`
+const Navbar = (props) => {
+    const toggleSideBar = props.toggleSideBar;
     const user = useSelector(state => state.user);
     const [inputText,setInputText] = useState('');
     const navigate = useNavigate();
@@ -52,17 +90,28 @@ const Navbar = () => {
         navigate(`/search?title=${inputText}`);
     }
   return (
-    <Wrapper>
-        <form onSubmit={handleTitleQuery}>
+    <Container>
+    <UpperNav>
+        {/* <form onSubmit={handleTitleQuery}>
         <Search>
             <input type="text" style={{width : "80%",fontSize : "20px"}} value = {inputText} onChange={handleInputText}/>
             <div style={{width:"30px",marginLeft:"10px"}}><img src={SearchIcon} alt="" /></div>
             <button type='submit' style={{"display":"none"}}></button>
         </Search>
-        </form>
-        <Center><StyledLink to = "/" style={{"fontStyle":"italic"}}>SHOPPERS STOP</StyledLink></Center>
-        
-        <Option>
+        </form> */}
+        <Center><StyledLink to = "/">TRY ON</StyledLink></Center>
+        <UpperNavOptionsContainer>
+            <UpperNavOptions>
+                <img src={UserIcon} alt="" />
+            </UpperNavOptions>
+            <UpperNavOptions>
+                <img src={SearchIcon} alt="" />
+            </UpperNavOptions>
+            <UpperNavOptions onClick={toggleSideBar}>
+                <img src={CartIcon} alt="" />
+            </UpperNavOptions>
+        </UpperNavOptionsContainer>
+        {/* <Option>
             {(user===null)? <div style={{paddingTop:"6px"}}><StyledLink to='/login'>SIGN IN</StyledLink></div> : <div style={{width:"30px"}}><StyledLink to = '/profile'><img src={UserIcon} alt="" /></StyledLink></div>}
 
         
@@ -70,8 +119,29 @@ const Navbar = () => {
             
             
             <div style={{width:"30px"}}><StyledLink to = '/cart'><img src={CartIcon} alt="" /></StyledLink></div>
-        </Option>  
-    </Wrapper>
+        </Option>   */}
+    </UpperNav>
+    <LowerNav>
+        <LowerNavOptions>
+            BOOK AN APPOINTMENT
+        </LowerNavOptions>
+        <LowerNavOptions>
+            SHOP
+        </LowerNavOptions>
+        <LowerNavOptions>
+            STORIES ABOUT US
+        </LowerNavOptions>
+        <LowerNavOptions>
+            BESPOKE
+        </LowerNavOptions>
+        <LowerNavOptions>
+            STORES
+        </LowerNavOptions>
+        <LowerNavOptions>
+            FRANCHISE ENQUIRY
+        </LowerNavOptions>
+    </LowerNav>
+    </Container>
   )
 }
 

@@ -1,44 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
 const Wrapper = styled.div` 
-    height: 400px;
-    width : 300px;
-    background-color: #f7fcfc;
-    padding: 5px;
+    height: 500px;
+    width : 303px;
+    /* background-color: #f7fcfc;
+    border : 1px solid black; */
     display: flex;
     flex-direction: column;
 `
-const ImageWrapper = styled.div` 
-        width: 100%;
-        height : 60%;
-        display: flex;
-        justify-content: center;
-        overflow: hidden;
-`
+
 const DetailsWrapper = styled.div` 
+    width: 100%;
     display:flex ;
     flex: 1;
     flex-direction: column;
     text-align: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    padding-top: 40px;
 `
 const Img = styled.img` 
-    object-fit: contain;
-    width: 80%;
+    width : 303px;
+    height: 400px;
 `
 
 const Product = (product) => {
     product = product.product;
   return (
     <Wrapper>
-        <ImageWrapper>
         <Img src = {product.image}></Img>
-        </ImageWrapper>
         <DetailsWrapper>
-        <p style={{paddingBottom : "10px"}}>{product.title}</p>
+        <p style={{paddingBottom : "10px"}}>viala</p>
         <p>₹{product.price}</p>
         </DetailsWrapper>
-     
     </Wrapper>
   )
 }

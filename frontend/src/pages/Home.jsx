@@ -1,24 +1,29 @@
 import React,{useState,useEffect} from 'react'
+import FilterBar from '../components/FilterBar'
 import { Link } from 'react-router-dom'
 import Product from '../components/Product'
 import styled from 'styled-components'
 import store from '../state/store'
 import { useSelector } from 'react-redux'
+const Container = styled.div`
+    margin-top: 50px;
+    display:flex;
+    flex-direction: column;
+    /* overflow: scroll; */
+    flex: 1;
+    padding-left: 200px;
+`
 const ProductList = styled.div`
+    min-width: 100%;
     padding: 10px;
     display: grid;
-    grid-template-columns:repeat(auto-fill, 300px);
+    grid-template-columns:repeat(auto-fill, 303px);
     justify-content: center;
     column-gap: 40px;
     row-gap: 20px;
     margin-top: 50px;
 `
-const Container = styled.div`
-    margin-top: 50px;
-    display:flex;
-    flex-direction: column;
-    overflow: scroll;
-`
+
 const FilterContainer = styled.div` 
     display: flex;
     justify-content: space-between;
@@ -51,8 +56,10 @@ const Home = () => {
     .catch(err => console.log(err));
   },[])
   return (
+    <div style={{"display":"flex","width":"100vw"}}>
+    <FilterBar/>
     <Container>
-        <FilterContainer>
+        {/* <FilterContainer>
             <FilterDiv>
             <p>Filter Products: </p>
             <Select name="size" id="size">
@@ -76,13 +83,14 @@ const Home = () => {
             <option value="popularity">Popularity</option>
             </Select>
             </SortDiv>
-        </FilterContainer>
+        </FilterContainer> */}
         <ProductList>
             {products.map((product,index) => {
                 return <StyledLink to={`/${product.id}`} key={index}><Product product={{...product}} /></StyledLink>
             })}
         </ProductList>
     </Container>
+    </div>
   )
 }
 

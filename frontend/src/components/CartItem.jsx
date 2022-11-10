@@ -1,29 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 const Wrapper = styled.div`
-    display : flex;
-    height: 150px;
-    border : 0.5px solid grey;
-    padding: 20px;
-    margin-bottom: 20px;
+display: flex;
 `
 const TextItemsWrapper = styled.div` 
-    padding-left: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 `
 const CartItem = (props) => {
     const item = props.item;
+    console.log(item);
   return (
     <Wrapper>
-        <div><img src={item.image}alt="" style={{maxHeight : "100%"}}/></div>
+        <div><img src={item.image} alt="" width={"80px"}/></div>
         <TextItemsWrapper>
-            <p><span style={{fontWeight:"800"}}>TITLE: </span>{item.title}</p>
-            <p><span style={{fontWeight:"800"}}>ID: </span>{item._id}</p>
-            <p><span style={{fontWeight:"800"}}>SIZE: </span>{item.size}</p>
-            <p><span style={{fontWeight:"800"}}>PRICE: </span>{item.price}</p>
-            <p><span style={{fontWeight:"800"}}>QUANTITY: </span>{item.quantity}</p>
+            <p>{item.title}</p>
+            <p>Rs {item.price}</p>
+
         </TextItemsWrapper>
     </Wrapper>
   )

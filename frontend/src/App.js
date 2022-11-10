@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Login from './pages/Login'
 import Signup from './pages/Signup';
@@ -13,8 +14,18 @@ import {Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import store from './state/store';
 import './App.css'
+import styled from 'styled-components';
+
+
+const LowerContainer = styled.div` 
+  display: flex;
+  padding-top : 124px;
+`
+
+
 const App = () => {
   const user = useSelector(state => state.user);
+  const [sideBarState,setSideBarState] = useState(false);
   useEffect(() => {;
     fetch('http://localhost:5000/api/auth/verifyToken',{
       method : 'GET',
@@ -27,9 +38,15 @@ const App = () => {
 })
     .catch(err => console.log(err));
   },[])
+
+  const toggleSideBar = () => {
+    setSideBarState(!sideBarState);
+  }
   return (
     <div className='App'>
-      <Navbar user={user}></Navbar>
+      <Navbar toggleSideBar={toggleSideBar}></Navbar>
+      <Sidebar toggleSideBar={toggleSideBar} isOpen={sideBarState}/>
+      <LowerContainer>
       <Routes>
         <Route path = '/' element={<Home/>} />
         <Route path = '/login' element={<Login/>} />
@@ -40,8 +57,8 @@ const App = () => {
         <Route path = '/successful' element={<OrderSuccessful/>}/>
         <Route path = '/search' element={<SearchView/>}/>
       </Routes>
+      </LowerContainer>
       <div style={{"height":"200px"}}></div>
-      <Footer/>
     </div>
   )
 }

@@ -33,22 +33,22 @@ const Cart = () => {
     }
     // useEffect(() => {
     //     console.log(user);
-    //     // if(user){
-    //     //    fetch('http://localhost:5000/api/cart',{
-    //     //        method : 'GET',
-    //     //        credentials : 'include'
-    //     //    })
-    //     //    .then(res => res.json())
-    //     //    .then(data => {
-    //     //     //    console.log(data.products);
-    //     //        return data.products;
-    //     //    })
-    //     //    .then(products => fetchProducts(products))
-    //     //    .then(fetchedProducts => {
-    //     //     //    console.log(fetchedProducts);
-    //     //        store.dispatch({type : 'initialiseCart',payload : fetchedProducts})})
-    //     //    .catch(err => console.log(err));
-    //     // }
+    //     if(user){
+    //        fetch('http://localhost:5000/api/cart',{
+    //            method : 'GET',
+    //            credentials : 'include'
+    //        })
+    //        .then(res => res.json())
+    //        .then(data => {
+    //         //    console.log(data.products);
+    //            return data.products;
+    //        })
+    //        .then(products => fetchProducts(products))
+    //        .then(fetchedProducts => {
+    //         //    console.log(fetchedProducts);
+    //            store.dispatch({type : 'initialiseCart',payload : fetchedProducts})})
+    //        .catch(err => console.log(err));
+    //     }
     //     return () => {
     //         console.log("component is unmounting");
     //     }
