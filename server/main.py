@@ -20,7 +20,7 @@ routes
 app = Flask(__name__)
 CORS(app,support_credentials=True,origins=["http://localhost:3000"])
 app.config['SECRET_KEY'] = "wt4cngf9wiu84c"
-client = MongoClient("mongodb+srv://URLS:VuwPi2qFFJow7O1L@cluster0.ben2g.mongodb.net/?retryWrites=true&w=majority",tlsInsecure = True)
+client = MongoClient("mongodb+srv://btp:tryon@cluster0.ugis7.mongodb.net/?retryWrites=true&w=majority",tlsInsecure = True)
 db = client["btp"]
 Product = db["Product"]
 User = db["User"]
