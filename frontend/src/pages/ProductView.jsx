@@ -33,6 +33,8 @@ const ProductView = () => {
   const productId = params.productId;
   console.log(productId);
   const [product, setProduct] = useState(null);
+  const [file, setFile] = useState(null);
+
   useEffect(() => {
     fetch(`http://127.0.0.1:5000/api/product/${productId}`)
       .then((res) => res.json())
@@ -46,24 +48,30 @@ const ProductView = () => {
   if (!product)
     return (
       <Wrapper>
-        <h1>Product not Found</h1>
+        <p>Loading</p>
       </Wrapper>
     );
 
-  const virtualTryOn = (e) => {};
+  
+  function handleChange(e) {
+      setFile(URL.createObjectURL(e.target.files[0]));
+  }
+  const virtualTryOn = (e) => {
+  };
+
   return (
     <Wrapper>
-      <div style={{ width: "600px" }}>
+      <div style={{ width: "500px" }}>
         <Carousel variant="dark" interval={null}>
-          <Carousel.Item style={{ alignItems: "center", textAlign: "center" }}>
+          <Carousel.Item style={{ alignItems: "center", textAlign: "center"}}>
             <img
-              style={{ width: "400px", textAlign: "center" }}
+              style={{ width: "500px", textAlign: "center" }}
               src={product.image}
               alt=""
             />
           </Carousel.Item>
           <Carousel.Item>
-            <img style={{ width: "400px" }} src={product.image} alt="" />
+            <img style={{ width: "500px" , textAlign: "center"}} src={product.image} alt="" />
           </Carousel.Item>
         </Carousel>
       </div>
@@ -84,7 +92,13 @@ const ProductView = () => {
         </p>
         <Quantity />
         <Button onClick={addToCart}>ADD TO CART</Button>
-        <Button onClick={virtualTryOn}>TRY ON</Button>
+        {/* <Button onClick={virtualTryOn}>UPLOAD IMAGE TO TRY ON</Button> */}
+        
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <h4>ADD IMAGE FOR TRY ON</h4>
+        <input type="file" onChange={handleChange} />
+        <img src={file} />
       </DetailsWrapper>
     </Wrapper>
   );

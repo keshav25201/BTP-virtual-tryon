@@ -48,8 +48,21 @@ const Home = () => {
   // const user = useSelector(state => state.user);
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/api/product", {
+    fetch("http://587f-35-245-175-106.ngrok.io/api/product", {
       method: "GET",
+      crossorigin: true,
+      headers: {
+        // 'Content-Type': 'application/json'
+        'content-type': 'application/json',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+        'cookie': 'abuse_interstitial=64d9-35-245-175-106.ngrok.io',
+        'path': '/api/product',
+        'scheme': 'https',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7',
+        'cache-control': 'max-age=0'
+      }
     })
       .then((res) => res.json())
       .then((products) => setProducts([...products]))
