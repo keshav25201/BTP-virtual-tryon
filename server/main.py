@@ -20,7 +20,7 @@ routes
 app = Flask(__name__)
 CORS(app,support_credentials=True,origins=["http://localhost:3000"])
 app.config['SECRET_KEY'] = "wt4cngf9wiu84c"
-client = MongoClient("mongodb+srv://btp:tryon@cluster0.ugis7.mongodb.net/?retryWrites=true&w=majority",tlsInsecure = True)
+client = MongoClient("",tlsInsecure = True)
 db = client["btp"]
 Product = db["Product"]
 User = db["User"]
@@ -32,8 +32,9 @@ def token_required(f):
         if token:
             try:
                 data = jwt.decode(token,app.config['SECRET_KEY'],algorithms=["HS256"])
+                data["token"] = token
                 print('-----user already authenticated-------')
-                return make_response("authenticated")
+                return make_response(data)
             except Exception as e:
                 print(e)
         return f(*args,**kwargs)
@@ -48,13 +49,17 @@ def login():
     password = data["password"]
     user = User.find_one({"mobile_no" : int(mobile_no)})
     if not user:
-        return jsonify({"message" : "authentication failed"})
+        return "authentication failed",401
     hash = user["password"]
     userBytes = password.encode('utf-8')
     result = bcrypt.checkpw(userBytes, hash)
-    token = jwt.encode({'mobile_no' : mobile_no,'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},app.config['SECRET_KEY'],algorithm="HS256")
+    if not result:
+        return "authentication failed",401
+    exp = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+    token = jwt.encode({'mobile_no' : mobile_no,'exp' : exp},app.config['SECRET_KEY'],algorithm="HS256")
     print("---generating new login token----",token)
-    response = make_response({"token" : token})
+
+    response = make_response({"token" : token,"mobile" : mobile_no,'exp' : exp})
     # response.set_cookie('token',token)
     # response.headers.add('Access-Control-Allow-Credentials',True)
     # return token.decode('UTF-8')

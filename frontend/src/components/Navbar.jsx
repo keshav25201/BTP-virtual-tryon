@@ -128,7 +128,8 @@ const Navbar = (props) => {
       <LowerNav>
         <LowerNavOptions>BOOK AN APPOINTMENT</LowerNavOptions>
         <LowerNavOptions>SHOP</LowerNavOptions>
-        <LowerNavOptions>STORIES ABOUT US</LowerNavOptions>
+        <LowerNavOptions>STORIES</LowerNavOptions>
+        <LowerNavOptions>ABOUT US</LowerNavOptions>
         <LowerNavOptions>BESPOKE</LowerNavOptions>
         <LowerNavOptions>STORES</LowerNavOptions>
         <LowerNavOptions>FRANCHISE ENQUIRY</LowerNavOptions>

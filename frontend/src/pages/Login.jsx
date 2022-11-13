@@ -76,13 +76,12 @@ const Login = () => {
         ...InputData,
         token: localStorage.getItem("token"),
       })
-      //   // .then((res) => {
-      //   //   store.dispatch({ type: "set", payload: res.data.user });
-      //   //   navigate("/");
-      //   // })
-      .then((res) => res.data.token)
-      .then((token) => {
-        if (token) localStorage.setItem("token", token);
+      .then((res) => {
+        let user = { mobile: res.data.mobile, exp: res.data.exp };
+        store.dispatch({ type: "set", payload: user });
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
