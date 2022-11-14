@@ -107,5 +107,18 @@ def users():
     for user in users:
         print(user)
     return ""
+@app.route("/tryon",methods=['POST'])
+def tryon():
+    print(request.get_json())
+  # img = request.get_json()['img']
+  # cloth = request.get_json()['cloth']
+  # response = urllib.request.urlopen(cloth)
+  # with open('inputs/cloth/cloth.jpg', 'wb') as f:
+  #   f.write(response.file.read())
+  # response = urllib.request.urlopen(img)
+  # with open('inputs/img/img.jpg', 'wb') as f:
+  #   f.write(response.file.read())
+  # return func()
+  return "true"
 if __name__ == "__main__":
     app.run(debug=True)

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import store from "../state/store";
 import Quantity from "../components/Quantity";
+import Loading from "../images/loading-state.gif";
 const Wrapper = styled.div`
   padding: 30px;
   display: flex;
@@ -34,7 +35,7 @@ const ProductView = () => {
   console.log(productId);
   const [product, setProduct] = useState(null);
   const [file, setFile] = useState(null);
-
+  const [try_on_result, set_try_on_result] = useState("");
   useEffect(() => {
     fetch(`http://127.0.0.1:5000/api/product/${productId}`)
       .then((res) => res.json())
@@ -52,18 +53,47 @@ const ProductView = () => {
       </Wrapper>
     );
 
-  
   function handleChange(e) {
-      setFile(URL.createObjectURL(e.target.files[0]));
+    setFile(URL.createObjectURL(e.target.files[0]));
   }
-  const virtualTryOn = (e) => {
+  const virtualTryOn = async (e) => {
+    var blob = await fetch(file).then((res) => res.blob());
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = async function () {
+      var base64StringPerson = reader.result;
+      var blob = await fetch(product.image).then((res) => res.blob());
+      var reader1 = new FileReader();
+      reader1.readAsDataURL(blob);
+      reader1.onloadend = function () {
+        var base64StringCloth = reader1.result;
+        var data = {
+          img: base64StringPerson,
+          cloth: base64StringCloth,
+        };
+        console.log(data);
+        set_try_on_result(Loading);
+        fetch("http://a67e-35-186-150-140.ngrok.io/tryon", {
+          method: "POST",
+          headers: {
+            "ngrok-skip-browser-warning": "1",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.text())
+          .then((res) => set_try_on_result("data:image/png;base64," + res))
+          .catch((err) => console.log(err));
+        // console.log("Base64 String - ", base64String);
+      };
+    };
   };
 
   return (
     <Wrapper>
       <div style={{ width: "500px" }}>
         <Carousel variant="dark" interval={null}>
-          <Carousel.Item style={{ alignItems: "center", textAlign: "center"}}>
+          <Carousel.Item style={{ alignItems: "center", textAlign: "center" }}>
             <img
               style={{ width: "500px", textAlign: "center" }}
               src={product.image}
@@ -71,7 +101,11 @@ const ProductView = () => {
             />
           </Carousel.Item>
           <Carousel.Item>
-            <img style={{ width: "500px" , textAlign: "center"}} src={product.image} alt="" />
+            <img
+              style={{ width: "500px", textAlign: "center" }}
+              src={product.image}
+              alt=""
+            />
           </Carousel.Item>
         </Carousel>
       </div>
@@ -92,13 +126,18 @@ const ProductView = () => {
         </p>
         <Quantity />
         <Button onClick={addToCart}>ADD TO CART</Button>
-        {/* <Button onClick={virtualTryOn}>UPLOAD IMAGE TO TRY ON</Button> */}
-        
         <span>&nbsp;</span>
         <span>&nbsp;</span>
         <h4>ADD IMAGE FOR TRY ON</h4>
         <input type="file" onChange={handleChange} />
-        <img src={file} />
+        <div style={{ display: "flex" }}>
+          <img src={file} style={{ width: "150px", height: "200px" }} />
+          <img
+            src={try_on_result}
+            style={{ width: "150px", height: "200px" }}
+          />
+        </div>
+        <Button onClick={virtualTryOn}>TRY ON</Button>
       </DetailsWrapper>
     </Wrapper>
   );

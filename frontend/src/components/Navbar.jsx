@@ -19,6 +19,7 @@ const UpperNav = styled.div`
   padding: 15px 10px;
   justify-content: space-between;
   font-family: Montserrat, sans-serif;
+  background-color: #ef9a53;
 `;
 const UpperNavOptionsContainer = styled.div`
   display: flex;
@@ -127,7 +128,9 @@ const Navbar = (props) => {
       </UpperNav>
       <LowerNav>
         <LowerNavOptions>BOOK AN APPOINTMENT</LowerNavOptions>
-        <LowerNavOptions>SHOP</LowerNavOptions>
+        <LowerNavOptions>
+          <Link to="/home">SHOP</Link>
+        </LowerNavOptions>
         <LowerNavOptions>STORIES</LowerNavOptions>
         <LowerNavOptions>ABOUT US</LowerNavOptions>
         <LowerNavOptions>BESPOKE</LowerNavOptions>
