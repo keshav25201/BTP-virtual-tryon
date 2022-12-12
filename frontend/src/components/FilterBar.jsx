@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 const FilterOptions = styled.div` 
     padding: 20px 5px 20px 5px;
-    display: flex;
+    display: grid;
     border-bottom: 0.5px solid #BFBFBF;
 `
 const text = `

@@ -37,7 +37,13 @@ const ProductView = () => {
   const [file, setFile] = useState(null);
   const [try_on_result, set_try_on_result] = useState("");
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/api/product/${productId}`)
+    fetch(`http://4895-34-143-226-12.ngrok.io/api/product/${productId}`,{
+      method: "GET",
+      headers: {
+        "ngrok-skip-browser-warning": "1",
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => setProduct({ ...data }))
       .catch((err) => console.log(err));
@@ -49,13 +55,14 @@ const ProductView = () => {
   if (!product)
     return (
       <Wrapper>
-        <p>Loading</p>
+        <p>Loading..</p>
       </Wrapper>
     );
 
   function handleChange(e) {
     setFile(URL.createObjectURL(e.target.files[0]));
   }
+
   const virtualTryOn = async (e) => {
     var blob = await fetch(file).then((res) => res.blob());
     var reader = new FileReader();
@@ -73,7 +80,8 @@ const ProductView = () => {
         };
         console.log(data);
         set_try_on_result(Loading);
-        fetch("http://a67e-35-186-150-140.ngrok.io/tryon", {
+        
+        fetch("http://4895-34-143-226-12.ngrok.io/tryon", {
           method: "POST",
           headers: {
             "ngrok-skip-browser-warning": "1",
@@ -130,11 +138,12 @@ const ProductView = () => {
         <span>&nbsp;</span>
         <h4>ADD IMAGE FOR TRY ON</h4>
         <input type="file" onChange={handleChange} />
-        <div style={{ display: "flex" }}>
-          <img src={file} style={{ width: "150px", height: "200px" }} />
+        <span>&nbsp;</span>
+        <div style={{ display: "flex", justifyContent: "space-between", width: "600px" }}>
+          <img src={file} style={{ width: "300px", height: "400px", flex: 1 }} />
           <img
             src={try_on_result}
-            style={{ width: "150px", height: "200px" }}
+            style={{ width: "300px", height: "400px" }}
           />
         </div>
         <Button onClick={virtualTryOn}>TRY ON</Button>

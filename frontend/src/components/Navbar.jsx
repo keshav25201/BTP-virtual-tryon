@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   border-bottom: 0.5px solid #bfbfbf;
   position: fixed;
+  z-index: 1000;
   top: 0px;
   width: 100vw;
   background: white;
